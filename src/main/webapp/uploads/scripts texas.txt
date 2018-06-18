@@ -1,0 +1,6 @@
+create table user(id bigint primary key auto_increment,
+email varchar(255), enabled tinyint(1) not null default 0,
+money int(11) not null,
+password varchar(255),
+username varchar(255),
+token_id bigint(20) not null unique);
