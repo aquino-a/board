@@ -1,0 +1,41 @@
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Files</title>
+        <style>
+            #picture img {
+                max-width: 300px;
+                height:auto;
+                float:left;
+            }
+            #links {
+                float:left;
+            }
+
+        </style>
+        <script src="http://code.jquery.com/jquery-3.3.1.js"></script> 
+        <script>
+            function setImage(path) {
+                $("#picture").text("").prepend($('<img>', {id: 'pic', src: path}));
+            }
+            $(document).ready(function () {
+                $('#submit').click(function (event) {
+                    $('#user').submit();
+                });
+            });
+        </script>
+
+    </head>
+    <body>
+       
+          
+            <form method="post" action="/model" id="user">
+                <label for="code">Code: </label><input id="name" name ="code" type="text"  />
+                <label for="name">Name: </label><input id="name" name = "name" type="text"  />
+                <label for="price">Price: </label><input id="name" name = "price" type="text" />
+                <button id="submit">Submit</button>
+            </form>
+
+    </body>
+</html>

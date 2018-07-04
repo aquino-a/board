@@ -31,14 +31,14 @@
                         event.preventDefault();
                     }
 
-                    if ($('#pwd').val() != $('#pwdc').val()) {
+                    if ($('#pwd').val() !== $('#pwdc').val()) {
                         alert("Password and Confirm Password don't match");
                         // Prevent form submission
                         event.preventDefault();
                     }
                     var fullAddress = $('#full-road').val();
                     
-                    if(fullAddress.length < 5 || $('#post-code').val().length < 3) ) {
+                    if(fullAddress.length < 5 || $('#post-code').val().length < 3 ) {
                         alert("You must input an address.");
                         event.preventDefault();
                     }
@@ -67,11 +67,11 @@
 
         <div class="container">
             <h2>Registration</h2>
-            <form:form class="form-horizontal" action="/users/register" method="post" modelAttribute="member" id="info">
+            <form class="form-horizontal" action="/users/register" method="post" id="info">
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="username">Username:</label>
                     <div class="col-sm-4">
-                        <form:input type="text" path="username" class="form-control" id="username" placeholder="Enter username" name="username"/>
+                        <input type="text"  class="form-control" id="username" placeholder="Enter username" name="username"/>
                     </div> 
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" id="id-check" >ID Check</button>
@@ -80,31 +80,31 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="pwd">Password:</label>
                     <div class="col-sm-4">          
-                        <form:input type="password" path="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd"/>
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="pwdc">Password confirm:</label>
                     <div class="col-sm-4">          
-                        <input type="password" class="form-control" id="pwdc" placeholder="Confirm Password" name="pwdc"/>
+                        <input type="password" class="form-control" id="pwdc" placeholder="Confirm Password"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="name">Name:</label>
                     <div class="col-sm-4">          
-                        <form:input type="text" path="name" class="form-control" id="name" placeholder="Name" name="name"/>
+                        <input type="text" class="form-control" id="name" placeholder="Name" name="name"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="age">Age:</label>
                     <div class="col-sm-4">          
-                        <form:input type="text" path="age" class="form-control" id="age" placeholder="Age" name="age"/>
+                        <input type="text" class="form-control" id="age" placeholder="Age" name="age"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="email">Email:</label>
                     <div class="col-sm-6">
-                        <form:input type="email" path="email" class="form-control" id="email" placeholder="Enter email" name="email"/>
+                        <input type="email"  class="form-control" id="email" placeholder="Enter email" name="email"/>
                     </div>
                 </div>
 
@@ -112,7 +112,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="age">Postal Code:</label>
                     <div class="col-sm-2">          
-                        <form:input type="text" path="address.postCode" class="form-control" id="post-code" placeholder="pc" name="pc"/>
+                        <input type="text" class="form-control" id="post-code" placeholder="pc" name="address.postCode"/>
                     </div>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" id="post-code-select" >Find</button>
@@ -125,8 +125,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="age">Address:</label>
                     <div class="col-sm-4">          
-                        <form:input type="text" path="address.fullAddress" class="form-control" id="full-road"  name="fa"/>
-                        <form:input type="text" path="address.jibunAddress" class="form-control" id="jibun"  name="jb"/>
+                        <input type="text" p class="form-control" id="full-road"  name="address.fullAddress"/>
+                        <input type="text" class="form-control" id="jibun"  name="address.jibunAddress"/>
                     </div>
                 </div>
                 <div class="form-group">        
@@ -135,7 +135,7 @@
                     </div>
                 </div>
 
-            </form:form>
+            </form>
         </div>
 
     </body>

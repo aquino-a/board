@@ -6,8 +6,11 @@
 package com.aquino.various.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,6 +35,8 @@ public class Member implements UserDetails {
     private long id;
     private String username, name, email;
     private int age;
+    
+    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
     private boolean enabled;
     
@@ -148,6 +153,34 @@ public class Member implements UserDetails {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 89 * hash + Objects.hashCode(this.username);
+        hash = 89 * hash + Objects.hashCode(this.email);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Member other = (Member) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+    
     
     
     

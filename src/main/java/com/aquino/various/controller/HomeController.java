@@ -5,9 +5,10 @@
  */
 package com.aquino.various.controller;
 
+import com.aquino.various.model.Member;
+import com.aquino.various.model.Product;
 import com.aquino.various.model.User;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,6 +25,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -42,26 +47,39 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class HomeController {
     
-    Map<String, Integer> map;
+    private Map<String, Integer> map;
+    
+    @Value("${user.save-location-path}")
+    private String saveLocationPath;
     
     @Autowired
     private HttpServletRequest request;
-
+    
     public HomeController() {
         this.map = new HashMap<>();
     }
     
+    
     @GetMapping("/form")
-    public String form(Model model) {
+    public String form(Model model, RedirectAttributes attr) {
+//        if(!model.containsAttribute("user"))
         model.addAttribute("objectForm", new User());
+        
         return "attributeForm";
     }
     
     @PostMapping("/form")
-    public String form(@ModelAttribute("objectForm") User user,Model model) {
-        model.addAttribute("user", user);
+    public String form(@ModelAttribute("objectForm") User user,
+            RedirectAttributes attr,Model model) {
+        attr.addFlashAttribute("user", user);
         System.out.println(user.getName());
-        return "attributeForm";
+        return "redirect:/form";
+    }
+    
+    @ResponseBody        
+    @PostMapping("/model")
+    public ResponseEntity<String> model(Product product) {
+        return ResponseEntity.ok("");
     }
     
     @GetMapping("/session")
@@ -77,6 +95,7 @@ public class HomeController {
             return "session";
         }
     }
+    
     @PostMapping("/session")
     public String reset(Model model) {
         String id = RequestContextHolder.currentRequestAttributes().getSessionId();
@@ -84,7 +103,7 @@ public class HomeController {
             map.put(id, 0);
             model.addAttribute("count", 0);
         }
-        return "session";
+        return "redirect:/session";
     }
     
     @GetMapping("/cookie")
@@ -120,14 +139,24 @@ public class HomeController {
     }
     
     @GetMapping("/files")
-    public String fileForm() {
+    public String fileForm(Model model) {
+        model.addAttribute("user", new User());
         return "files";
     }
     
     
     @PostMapping("/files")
-    public String files(@RequestParam List<MultipartFile> files, Model model) {
-        String savePath = request.getServletContext().getRealPath("/uploads/");
+    public String files(@RequestParam List<MultipartFile> files,
+            Model model,@AuthenticationPrincipal Member member,
+            User user) {
+         String userLocation = "\\" + member.getUsername()+ "\\images\\";
+        String savePath = saveLocationPath + userLocation;   
+        
+        File directory = new File(savePath);
+        if(!directory.exists())
+            directory.mkdirs();
+             
+                
         ArrayList<String> names = new ArrayList();
         files.forEach((file) -> {
             try {
@@ -139,23 +168,27 @@ public class HomeController {
         });
         
         model.addAttribute("files",names);
+        model.addAttribute("user", user);
         return "files";
     }
     
     @ResponseBody
-    @GetMapping("/uploads/{fileName}")
-    public byte[] findFile(@PathVariable String fileName,HttpServletResponse response) throws FileNotFoundException {
-        String path = request.getServletContext().getRealPath("/uploads/" + fileName);
+    @GetMapping("/images/{fileName}")
+    public byte[] findFile(@PathVariable String fileName,
+            HttpServletResponse response, @AuthenticationPrincipal Member member
+            ) throws FileNotFoundException {
+//        String path = request.getServletContext().getRealPath("/uploads/" + fileName);
+        String savePath = saveLocationPath + "\\" 
+                + member.getUsername()+ "\\images\\" + fileName;
         try {
-            return Files.readAllBytes(Paths.get(path));
+            return Files.readAllBytes(Paths.get(savePath));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        
-               
-        
     }
+    
+    
     @GetMapping("/login")
     public String login() {
         return "login";

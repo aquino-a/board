@@ -5,6 +5,7 @@
  */
 package com.aquino.various.model;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +15,7 @@ import javax.persistence.Id;
  * @author b005
  */
 @Entity
-public class Address {
+public class Address implements  Serializable{
     
     @Id
     @GeneratedValue

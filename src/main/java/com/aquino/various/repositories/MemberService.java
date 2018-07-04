@@ -5,6 +5,7 @@
  */
 package com.aquino.various.repositories;
 
+import com.aquino.various.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,6 +28,10 @@ public class MemberService implements UserDetailsService {
         if(user == null)
             throw new UsernameNotFoundException(string);
         return user;
+    }
+    
+    public Member findByUsername(String name) {
+        return findByUsername(name);
     }
     
 }

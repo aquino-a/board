@@ -37,20 +37,19 @@ public class MemberController {
     
     
     @GetMapping("register")
-    public String registerForm(Model model) {
-        model.addAttribute("member", new Member());
+    public String registerForm() {
         return "register";
     }
     
     @PostMapping("/register")
-    public String form(@ModelAttribute("member") Member member) throws Exception {
+    public String form(Member member) throws Exception {
         if(userRepository.findByUsername(member.getUsername()) != null)
             throw new Exception("already exists");
         member.setEnabled(true);
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         member.setAddress(addressRepository.save(member.getAddress()));
         userRepository.save(member);
-        return "login";
+        return "redirect:/login";
     }
     
     @GetMapping("/register/check")
