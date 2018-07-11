@@ -153,6 +153,13 @@ public class PostController {
             return ResponseEntity.notFound().build();
         }
     }
+    
+    @GetMapping("/me") 
+    public ResponseEntity<Member> userInfo(@AuthenticationPrincipal Member member){
+//        if(member == null)
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        return ResponseEntity.ok(member);
+    }
 
     private String makePath(String username) {
         StringBuilder sb = new StringBuilder(saveLocationPath);

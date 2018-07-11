@@ -9,12 +9,14 @@ import com.aquino.board.model.Member;
 import com.aquino.board.repositories.AddressRepository;
 import com.aquino.board.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,15 +63,12 @@ public class MemberController {
         return "check";
     }
     
-    @ResponseBody
-    @GetMapping("/me") 
-    public String userInfo(@AuthenticationPrincipal Member member){
-        
-        
-        return String.format("Id: %d%nUsername: %s%nPassword: %s%n"
-                + "Age: %s%nEmail:%s%nPost Code:%s%nAddress:%s",member.getId(),member.getUsername()
-                ,member.getPassword(),member.getAge(),member.getEmail()
-                ,member.getAddress().getPostCode(),member.getAddress().getFullAddress());
-    }
+//    @ResponseBody
+//    @GetMapping("/me") 
+//    public ResponseEntity<Member> userInfo(@AuthenticationPrincipal Member member){
+////        if(member == null)
+////            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//        return ResponseEntity.ok(member);
+//    }
     
 }
