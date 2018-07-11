@@ -5,11 +5,11 @@
  */
 package com.aquino.various.post;
 
-import com.aquino.various.controller.PostController;
-import com.aquino.various.repositories.ImageRepository;
-import com.aquino.various.repositories.MemberService;
-import com.aquino.various.repositories.PostRepository;
-import com.aquino.various.service.PostService;
+import com.aquino.board.controller.PostController;
+import com.aquino.board.repositories.ImageRepository;
+import com.aquino.board.repositories.MemberService;
+import com.aquino.board.repositories.PostRepository;
+import com.aquino.board.service.PostService;
 import org.assertj.core.api.Fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;

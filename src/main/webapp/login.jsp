@@ -31,6 +31,9 @@
         <div class="container">
 
             <form method="POST" action="/login" class="form-signin">
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
                 <h2 class="form-heading">Log in</h2>
 
                 <div class="form-group" >

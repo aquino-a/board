@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.service;
+package com.aquino.board.service;
 
-import com.aquino.various.model.Post;
+import com.aquino.board.model.Post;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 /**

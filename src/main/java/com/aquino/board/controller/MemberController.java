@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.controller;
+package com.aquino.board.controller;
 
-import com.aquino.various.model.Member;
-import com.aquino.various.repositories.AddressRepository;
-import com.aquino.various.repositories.UserRepository;
+import com.aquino.board.model.Member;
+import com.aquino.board.repositories.AddressRepository;
+import com.aquino.board.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;

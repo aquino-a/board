@@ -1,4 +1,4 @@
-package com.aquino.various;
+package com.aquino.board;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

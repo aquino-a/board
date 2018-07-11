@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.config;
+package com.aquino.board.config;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +79,7 @@ public class OauthConfiguration extends AuthorizationServerConfigurerAdapter  {
                 .autoApprove(".*")
                 .and()
                 .withClient("pizza")
-                .authorizedGrantTypes("authorization_code")
+                .authorizedGrantTypes("authorization_code","implicit")
                 .scopes("read", "write");
         // @formatter:on
     }

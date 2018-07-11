@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.service;
+package com.aquino.board.service;
 
-import com.aquino.various.model.Post;
-import com.aquino.various.repositories.PostRepository;
+import com.aquino.board.model.Post;
+import com.aquino.board.repositories.PostRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

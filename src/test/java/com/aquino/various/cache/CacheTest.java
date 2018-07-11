@@ -6,8 +6,8 @@
 package com.aquino.various.cache;
 
 import com.aquino.various.data.LRUCache;
-import com.aquino.various.model.Post;
-import com.aquino.various.repositories.PostRepository;
+import com.aquino.board.model.Post;
+import com.aquino.board.repositories.PostRepository;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;

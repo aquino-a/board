@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.controller;
+package com.aquino.board.controller;
 
-import com.aquino.various.model.Member;
-import com.aquino.various.model.Product;
-import com.aquino.various.model.User;
+import com.aquino.board.model.Member;
+import com.aquino.board.model.Product;
+import com.aquino.board.model.User;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

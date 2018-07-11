@@ -5,7 +5,7 @@
  */
 package com.aquino.various.data;
 
-import com.aquino.various.model.Post;
+import com.aquino.board.model.Post;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

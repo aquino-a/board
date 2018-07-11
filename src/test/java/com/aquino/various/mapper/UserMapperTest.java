@@ -5,7 +5,8 @@
  */
 package com.aquino.various.mapper;
 
-import com.aquino.various.model.User;
+import com.aquino.board.mapper.UserMapper;
+import com.aquino.board.model.User;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;

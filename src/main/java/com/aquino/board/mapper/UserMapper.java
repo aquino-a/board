@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.mapper;
+package com.aquino.board.mapper;
 
-import com.aquino.various.model.User;
+import com.aquino.board.model.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

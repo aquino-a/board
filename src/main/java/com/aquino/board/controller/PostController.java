@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.controller;
+package com.aquino.board.controller;
 
-import com.aquino.various.model.Image;
-import com.aquino.various.model.Member;
-import com.aquino.various.model.Post;
-import com.aquino.various.repositories.ImageRepository;
-import com.aquino.various.repositories.MemberService;
-import com.aquino.various.repositories.PostRepository;
-import com.aquino.various.service.PostService;
+import com.aquino.board.model.Image;
+import com.aquino.board.model.Member;
+import com.aquino.board.model.Post;
+import com.aquino.board.repositories.ImageRepository;
+import com.aquino.board.repositories.MemberService;
+import com.aquino.board.repositories.PostRepository;
+import com.aquino.board.service.PostService;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -142,7 +142,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
     
-     @GetMapping("{username}/images/{fileName}")
+    @GetMapping("{username}/images/{fileName}")
     public ResponseEntity<byte[]> findFile(@PathVariable String fileName,
             @PathVariable String username) throws FileNotFoundException {
         String path = makePath(username) + fileName;

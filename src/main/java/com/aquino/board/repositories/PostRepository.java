@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.repositories;
+package com.aquino.board.repositories;
 
-import com.aquino.various.model.Member;
-import com.aquino.various.model.Post;
+import com.aquino.board.model.Member;
+import com.aquino.board.model.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
