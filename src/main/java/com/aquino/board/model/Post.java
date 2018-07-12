@@ -7,7 +7,7 @@ package com.aquino.board.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +18,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -27,7 +26,7 @@ import javax.persistence.OneToOne;
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Post {
-
+    
     @JsonIgnore
     @ManyToOne
     private Post parentPost;
@@ -108,6 +107,13 @@ public class Post {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+    
+    @JsonProperty
+    public long getParentId() {
+        if(parentPost == null)
+            return -1L;
+        else return parentPost.getId();
     }
     
     @Override

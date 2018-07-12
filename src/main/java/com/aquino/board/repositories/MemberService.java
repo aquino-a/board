@@ -31,7 +31,7 @@ public class MemberService implements UserDetailsService {
     }
     
     public Member findByUsername(String name) {
-        return findByUsername(name);
+        return userRepository.findByUsername(name);
     }
     
 }
