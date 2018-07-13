@@ -44,6 +44,9 @@ public class Post {
     @Column(name = "post_date")
     private LocalDateTime postDate;
     
+    @JsonIgnore
+    @Column(name = "last_access_date")
+    private LocalDateTime lastAccessDate;
     
     @OneToMany
     private List<Post> replies;
@@ -107,6 +110,14 @@ public class Post {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public LocalDateTime getLastAccessDate() {
+        return lastAccessDate;
+    }
+
+    public void setLastAccessDate(LocalDateTime lastAccessDate) {
+        this.lastAccessDate = lastAccessDate;
     }
     
     @JsonProperty
