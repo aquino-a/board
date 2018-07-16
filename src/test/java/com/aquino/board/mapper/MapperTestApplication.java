@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.mapper;
+package com.aquino.board.mapper;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

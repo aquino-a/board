@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aquino.various.post;
+package com.aquino.board.post;
 
 import com.aquino.board.controller.PostController;
 import com.aquino.board.repositories.ImageRepository;

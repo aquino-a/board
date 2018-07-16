@@ -143,14 +143,14 @@
             <configuration>
                 <nodeVersion>v8.8.1</nodeVersion>
             </configuration>
-            <executions>
+<!--            <executions>
                 <execution>
                     <id>install-npm</id>
                     <goals>
                         <goal>install-node-and-npm</goal>
                     </goals>
                 </execution>
-            </executions>
+            </executions>-->
         </plugin>
         </plugins>
     </build>
