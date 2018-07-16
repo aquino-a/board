@@ -16,9 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
-import static java.nio.file.Files.delete;
 import java.nio.file.Paths;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +64,7 @@ public class PostController {
     MemberService memberService;
     @Autowired
     private TokenStore tokenStore;
+    
 
     @Value("${user.save-location-path}")
     private String saveLocationPath;
@@ -174,25 +173,6 @@ public class PostController {
     @GetMapping("/me")
     public ResponseEntity<Member> userInfo(@AuthenticationPrincipal Member member) {
         return ResponseEntity.ok(member);
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<String> logOut(Principal principal,
-            HttpServletRequest request, HttpServletResponse response,
-            Model model) {
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
-            for (Cookie cookie : cookies) {
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-            }
-            model.addAttribute("cookie", request.getCookies());
-        }
-        
-        OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) principal;
-        OAuth2AccessToken accessToken = tokenStore.getAccessToken(oAuth2Authentication);
-        tokenStore.removeAccessToken(accessToken);
-        return ResponseEntity.ok("ok");
     }
 
     private String makePath(String username) {
