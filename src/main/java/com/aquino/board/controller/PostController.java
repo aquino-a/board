@@ -16,13 +16,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import static java.nio.file.Files.delete;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -30,7 +35,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,14 +56,20 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/posts")
 public class PostController {
 
-    @Autowired ImageRepository imageRepository;
-    @Autowired PostRepository postRepository;
-    @Autowired PostService postService;
-    @Autowired MemberService memberService;
+    @Autowired
+    ImageRepository imageRepository;
+    @Autowired
+    PostRepository postRepository;
+    @Autowired
+    PostService postService;
+    @Autowired
+    MemberService memberService;
+    @Autowired
+    private TokenStore tokenStore;
 
     @Value("${user.save-location-path}")
     private String saveLocationPath;
-    
+
     @GetMapping()
     public ResponseEntity<Page<Post>> getPosts(Pageable page) {
         return ResponseEntity.ok(
@@ -66,7 +80,7 @@ public class PostController {
     public ResponseEntity<Long> getCount() {
         return ResponseEntity.ok(postService.countPosts());
     }
-    
+
     @GetMapping("/user/{username}")
     public ResponseEntity<Page<Post>> getUserPosts(
             @PathVariable String username, Pageable page) {
@@ -75,29 +89,31 @@ public class PostController {
                 postRepository
                         .findPostByMemberAndParentPostIsNullOrderByLastAccessDateDescPostDateDesc(member, page));
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPost(
             @PathVariable long id) {
         Optional<Post> postOption = postRepository.findById(id);
-        if(postOption.isPresent())
+        if (postOption.isPresent()) {
             return ResponseEntity.ok(postOption.get());
-        else return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-    
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deletePost(
-            @PathVariable long id,@AuthenticationPrincipal Member member) {
+            @PathVariable long id, @AuthenticationPrincipal Member member) {
         Optional<Post> postOption = postRepository.findById(id);
         Post post;
-        if(postOption.isPresent()) {
+        if (postOption.isPresent()) {
             post = postOption.get();
             postService.deletePost(post);
-             return ResponseEntity.ok(id);
+            return ResponseEntity.ok(id);
         }
-        return ResponseEntity.status( HttpStatus.NOT_FOUND).body(id);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(id);
     }
-    
+
     @PostMapping("/new")
     public ResponseEntity<Post> newPost(
             @AuthenticationPrincipal Member member,
@@ -142,7 +158,7 @@ public class PostController {
         postRepository.save(post);
         return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
-    
+
     @GetMapping("{username}/images/{fileName}")
     public ResponseEntity<byte[]> findFile(@PathVariable String fileName,
             @PathVariable String username) throws FileNotFoundException {
@@ -154,12 +170,29 @@ public class PostController {
             return ResponseEntity.notFound().build();
         }
     }
-    
-    @GetMapping("/me") 
-    public ResponseEntity<Member> userInfo(@AuthenticationPrincipal Member member){
-//        if(member == null)
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+    @GetMapping("/me")
+    public ResponseEntity<Member> userInfo(@AuthenticationPrincipal Member member) {
         return ResponseEntity.ok(member);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logOut(Principal principal,
+            HttpServletRequest request, HttpServletResponse response,
+            Model model) {
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+            model.addAttribute("cookie", request.getCookies());
+        }
+        
+        OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) principal;
+        OAuth2AccessToken accessToken = tokenStore.getAccessToken(oAuth2Authentication);
+        tokenStore.removeAccessToken(accessToken);
+        return ResponseEntity.ok("ok");
     }
 
     private String makePath(String username) {
