@@ -18,6 +18,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface PostRepository extends PagingAndSortingRepository<Post, Long>{
     
     Post findPostByText(String text);
-    Page<Post> findAllByParentPostIsNullOrderByLastAccessDateDescPostDateDesc(Pageable page);
-    Page<Post> findPostByMemberAndParentPostIsNullOrderByLastAccessDateDescPostDateDesc(Member member, Pageable page);
+    Page<Post> findAllByParentPostIsNullOrderByLastAccessDateDesc(Pageable page);
+    Page<Post> findPostByMemberAndParentPostIsNullOrderByLastAccessDateDesc(Member member, Pageable page);
 }

@@ -72,7 +72,7 @@ public class PostController {
     @GetMapping()
     public ResponseEntity<Page<Post>> getPosts(Pageable page) {
         return ResponseEntity.ok(
-                postRepository.findAllByParentPostIsNullOrderByLastAccessDateDescPostDateDesc(page));
+                postRepository.findAllByParentPostIsNullOrderByLastAccessDateDesc(page));
     }
 
     @GetMapping("/count")
@@ -86,7 +86,7 @@ public class PostController {
         Member member = memberService.findByUsername(username);
         return ResponseEntity.ok(
                 postRepository
-                        .findPostByMemberAndParentPostIsNullOrderByLastAccessDateDescPostDateDesc(member, page));
+                        .findPostByMemberAndParentPostIsNullOrderByLastAccessDateDesc(member, page));
     }
 
     @GetMapping("/{id}")
@@ -121,6 +121,7 @@ public class PostController {
         Post post = postRepository.save(postInput);
         post.setMember(member);
         post.setPostDate(LocalDateTime.now());
+        post.setLastAccessDate(LocalDateTime.now());
 
         List<Image> images = new ArrayList<>();
         String path = makePath(member.getUsername());
