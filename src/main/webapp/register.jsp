@@ -37,8 +37,8 @@
                         event.preventDefault();
                     }
                     var fullAddress = $('#full-road').val();
-                    
-                    if(fullAddress.length < 5 || $('#post-code').val().length < 3 ) {
+
+                    if (fullAddress.length < 5 || $('#post-code').val().length < 3) {
                         alert("You must input an address.");
                         event.preventDefault();
                     }
@@ -68,6 +68,9 @@
         <div class="container">
             <h2>Registration</h2>
             <form class="form-horizontal" action="/users/register" method="post" id="info">
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="username">Username:</label>
                     <div class="col-sm-4">
@@ -125,7 +128,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="age">Address:</label>
                     <div class="col-sm-4">          
-                        <input type="text" p class="form-control" id="full-road"  name="address.fullAddress"/>
+                        <input type="text"  class="form-control" id="full-road"  name="address.fullAddress"/>
                         <input type="text" class="form-control" id="jibun"  name="address.jibunAddress"/>
                     </div>
                 </div>

@@ -38,7 +38,7 @@
 
                 <div class="form-group" >
                     <input name="username" type="text" class="form-control" placeholder="Username"
-                           autofocus="true"/>
+                           autofocus/>
                     <input name="password" type="password" class="form-control" placeholder="Password"/>
 
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
