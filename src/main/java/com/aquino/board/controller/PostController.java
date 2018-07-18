@@ -122,7 +122,7 @@ public class PostController {
         post.setMember(member);
         post.setPostDate(LocalDateTime.now());
         post.setLastAccessDate(LocalDateTime.now());
-        if(post.getText() == null)
+        if(post.getText().equals("undefined"))
             post.setText("");
         List<Image> images = new ArrayList<>();
         String path = makePath(member.getUsername());
