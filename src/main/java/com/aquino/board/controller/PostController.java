@@ -122,7 +122,8 @@ public class PostController {
         post.setMember(member);
         post.setPostDate(LocalDateTime.now());
         post.setLastAccessDate(LocalDateTime.now());
-
+        if(post.getText() == null)
+            post.setText("");
         List<Image> images = new ArrayList<>();
         String path = makePath(member.getUsername());
         File directory = (new File(path));
