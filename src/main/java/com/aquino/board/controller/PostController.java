@@ -88,6 +88,12 @@ public class PostController {
                 postRepository
                         .findPostByMemberAndParentPostIsNullOrderByLastAccessDateDesc(member, page));
     }
+    
+    
+    @GetMapping("/search")
+    public ResponseEntity<Page<Post>> search(String search, Pageable page) {
+        return ResponseEntity.ok(postRepository.findAllByText(search, page));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPost(
@@ -176,7 +182,7 @@ public class PostController {
     public ResponseEntity<Member> userInfo(@AuthenticationPrincipal Member member) {
         return ResponseEntity.ok(member);
     }
-
+    
     private String makePath(String username) {
         StringBuilder sb = new StringBuilder(saveLocationPath);
         sb.append("\\");
