@@ -8,9 +8,12 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class BoardApplication extends SpringBootServletInitializer {
 
-    public static void main(String[] args) {
-        new SpringApplicationBuilder(BoardApplication.class)
-                .properties("spring.config.name:application,config")
-                .build().run(args);
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(BoardApplication.class).properties("spring.config.name:application,config");
+    }
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(BoardApplication.class, args);
     }
 }

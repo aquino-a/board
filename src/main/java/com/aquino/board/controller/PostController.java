@@ -185,9 +185,9 @@ public class PostController {
     
     private String makePath(String username) {
         StringBuilder sb = new StringBuilder(saveLocationPath);
-        sb.append("\\");
+        sb.append("/");
         sb.append(username);
-        sb.append("\\images\\");
+        sb.append("/images/");
         return sb.toString();
     }
 

@@ -9,7 +9,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-        <script src="/js/post.js"></script>
+        <script src="${pageContext.request.contextPath}/js/post.js"></script>
         <script>
 
 
@@ -67,7 +67,7 @@
 
         <div class="container">
             <h2>Registration</h2>
-            <form class="form-horizontal" action="/users/register" method="post" id="info">
+            <form class="form-horizontal" action="${pageContext.request.contextPath}/users/register" method="post" id="info">
                 <input type="hidden"
                        name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
