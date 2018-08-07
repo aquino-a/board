@@ -26,7 +26,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  *
@@ -36,7 +35,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableSpringDataWebSupport
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -60,7 +59,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll()
-                
                 .and().csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
@@ -81,16 +79,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedMethods("*").allowedOrigins(frontDomain);
-            }
-        };
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("*").allowedOrigins(frontDomain);
     }
-    
+
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurerAdapter() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**").allowedMethods("*").allowedOrigins(frontDomain);
+//            }
+//        };
+//    }
 //    @Bean
 //	CorsConfigurationSource corsConfigurationSource() {
 //		CorsConfiguration configuration = new CorsConfiguration();
@@ -99,5 +101,4 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //		source.registerCorsConfiguration("/**", configuration);
 //		return source;
 //	}
-
 }
